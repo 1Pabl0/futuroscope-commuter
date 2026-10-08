@@ -1,0 +1,96 @@
+version: '3.8'
+
+services:
+  # -------------------------------------------------------------
+  # 1. PostgreSQL + PostGIS Spatial Database
+  # -------------------------------------------------------------
+  postgres:
+    image: postgis/postgis:15-3.3-alpine
+    container_name: futuroscope-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: futuroscope_commuter
+      POSTGRES_USER: commuter
+      POSTGRES_PASSWORD: commuter_secret
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U commuter -d futuroscope_commuter"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - commuter-net
+
+  # -------------------------------------------------------------
+  # 2. Redis High-Speed Cache
+  # -------------------------------------------------------------
+  redis:
+    image: redis:7-alpine
+    container_name: futuroscope-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - commuter-net
+
+  # -------------------------------------------------------------
+  # 3. FastAPI Backend Service
+  # -------------------------------------------------------------
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: futuroscope-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=production
+      - DEBUG=false
+      - DATABASE_URL=postgresql+asyncpg://commuter:commuter_secret@postgres:5432/futuroscope_commuter
+      - REDIS_URL=redis://redis:6379/0
+      - BACKEND_HOST=0.0.0.0
+      - BACKEND_PORT=8000
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - commuter-net
+
+  # -------------------------------------------------------------
+  # 4. Streamlit Dashboard Frontend
+  # -------------------------------------------------------------
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    container_name: futuroscope-frontend
+    restart: unless-stopped
+    ports:
+      - "8501:8501"
+    environment:
+      - BACKEND_URL=http://backend:8000/api/v1
+    depends_on:
+      - backend
+    networks:
+      - commuter-net
+
+networks:
+  commuter-net:
+    driver: bridge
+
+volumes:
+  pgdata:
+  redisdata:

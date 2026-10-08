@@ -1,0 +1,4 @@
+-r backend/requirements.txt
+-r frontend/requirements.txt
+black>=24.2.0
+flake8>=7.0.0
