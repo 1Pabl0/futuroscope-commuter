@@ -61,29 +61,42 @@ En croisant en temps réel les données de transport multi-modal (Bus Vitalis, n
 
 ## 🚀 Démarrage Rapide
 
-### Option 1 : Déploiement via Docker Compose (Recommandé)
+### Option 1 : Lancement en une seule commande (Recommandé en local)
+
+Un script interactif tout-en-un gère l'installation des dépendances, le démarrage synchronisé du Backend et du Frontend, ainsi que l'arrêt propre des processus :
+
+```bash
+cd futuroscope-commuter
+./start.sh
+```
+
+- 🌐 **Dashboard Web :** [`http://localhost:8501`](http://localhost:8501)
+- 📑 **Documentation API Swagger :** [`http://localhost:8000/docs`](http://localhost:8000/docs)
+- 📖 **Documentation ReDoc :** [`http://localhost:8000/redoc`](http://localhost:8000/redoc)
+
+Options supplémentaires du script :
+```bash
+./start.sh backend     # Démarre uniquement l'API FastAPI
+./start.sh frontend    # Démarre uniquement le Dashboard Streamlit
+./start.sh docker      # Déploie via Docker Compose
+./start.sh test        # Exécute la suite de tests Pytest
+```
+
+---
+
+### Option 2 : Déploiement via Docker Compose
 
 Assurez-vous d'avoir [Docker](https://docker.com) et [Docker Compose](https://docker.com) installés.
 
-1. **Cloner le dépôt :**
-   ```bash
-   git clone https://github.com/votre-user/futuroscope-commuter.git
-   cd futuroscope-commuter
-   ```
-
-2. **Configurer l'environnement :**
+1. **Configurer l'environnement :**
    ```bash
    cp .env.example .env
    ```
 
-3. **Lancer tous les conteneurs :**
+2. **Lancer tous les conteneurs :**
    ```bash
    docker-compose up --build
    ```
-
-- 🌐 **Dashboard Web :** `http://localhost:8501`
-- 📑 **Documentation API Swagger :** `http://localhost:8000/docs`
-- 📖 **Documentation ReDoc :** `http://localhost:8000/redoc`
 
 ---
 
