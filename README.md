@@ -1,4 +1,4 @@
-# 🚌 Futuroscope Commuter API & Dashboard
+#  Futuroscope Commuter API & Dashboard
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python Version](https://img.shields.io/badge/Python-3.12-3776AB.svg?logo=python&logoColor=white)](https://python.org)
@@ -13,28 +13,28 @@ En croisant en temps réel les données de transport multi-modal (Bus Vitalis, n
 
 ---
 
-## ✨ Fonctionnalités Principales
+## Fonctionnalités Principales
 
-- 🕒 **Temps Réel Multi-Modal :** 
+- **Temps Réel Multi-Modal :** 
   - Agrégation des prochains passages de bus (Lignes Vitalis 1, 1E Express, 21, Navette E) avec estimation des retards et affluence.
   - Horaires en direct de la **navette ferroviaire TER Nouvelle-Aquitaine** (Gare de Poitiers Toumaï ↔ Gare du Futuroscope en seulement **8 minutes** de trajet direct).
-- 🌤️ **Contextualisation Météo :** 
+-  **Contextualisation Météo :** 
   - Prévisions météo horaires géolocalisées pour la Technopole (Chasseneuil-du-Poitou / Jaunay-Marigny, Vienne 86).
   - Alertes automatiques de précipitations, températures extrêmes et rafales de vent.
-- 🧠 **Indice de Confort de Trajet (ICT) :** 
+-  **Indice de Confort de Trajet (ICT) :** 
   - Algorithme prédictif scoré de 0 à 100 combinant la régularité du trafic et les intempéries.
   - Recommandation dynamique du mode de déplacement optimal (vélo / trottinette sur pistes cyclables, bus express 1E, ou navette TER abritée) avec conseils d'équipement.
-- 🗺️ **Cartographie Interactive 3D / 2D :** 
+-  **Cartographie Interactive 3D / 2D :** 
   - Visualisation des arrêts de bus, stations TER, stations vélos en libre-service et du corridor multimodal Poitiers-Futuroscope via Pydeck.
-- 🎯 **Simulateur de Trajet :** 
+-  **Simulateur de Trajet :** 
   - Interface interactive permettant de tester la réaction de l'algorithme face à des scénarios météo extrêmes ou des pannes de réseau.
-- 🐳 **Prêt pour la Production :** 
+-  **Prêt pour la Production :** 
   - Déploiement en une seule commande via Docker Compose (PostgreSQL/PostGIS, Redis, FastAPI, Streamlit).
   - Mode local sans Docker avec fallback SQLite et cache en mémoire à tolérance de panne.
 
 ---
 
-## 🏗️ Architecture Technique
+##  Architecture Technique
 
 ```
                               ┌────────────────────────────────────────┐
